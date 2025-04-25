@@ -4,7 +4,10 @@ Audio Splitter - Corta archivos de audio .wav en segmentos definidos por el usua
 Uso: Especifica el archivo de entrada y los tiempos de inicio y fin para cada segmento.
 """
 
-from pydub import AudioSegment
+# Alternativa usando librosa y soundfile que son más compatibles con Python 3.13
+import librosa
+import soundfile as sf
+import numpy as np
 import os
 import argparse
 
@@ -18,9 +21,9 @@ def split_audio(input_file, segments, output_dir="output"):
         output_dir (str): Directorio donde se guardarán los archivos de salida
     """
     try:
-        # Cargar el archivo de audio
+        # Cargar el archivo de audio usando librosa
         print(f"Cargando archivo de audio: {input_file}")
-        audio = AudioSegment.from_wav(input_file)
+        y, sr = librosa.load(input_file, sr=None)  # sr=None conserva la frecuencia de muestreo original
         
         # Crear directorio de salida si no existe
         if not os.path.exists(output_dir):
@@ -29,9 +32,13 @@ def split_audio(input_file, segments, output_dir="output"):
         
         # Procesar cada segmento
         for i, (start_ms, end_ms, name) in enumerate(segments):
+            # Convertir milisegundos a muestras
+            start_sample = int((start_ms / 1000) * sr)
+            end_sample = int((end_ms / 1000) * sr)
+            
             # Extraer el segmento
             print(f"Cortando segmento {i+1}: {start_ms}ms - {end_ms}ms")
-            segment = audio[start_ms:end_ms]
+            segment = y[start_sample:end_sample]
             
             # Definir nombre de salida
             if name:
@@ -39,8 +46,8 @@ def split_audio(input_file, segments, output_dir="output"):
             else:
                 output_file = f"{output_dir}/segment_{i+1}.wav"
             
-            # Exportar el segmento
-            segment.export(output_file, format="wav")
+            # Exportar el segmento usando soundfile
+            sf.write(output_file, segment, sr)
             print(f"Segmento guardado como: {output_file}")
     
     except Exception as e:

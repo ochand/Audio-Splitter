@@ -12,21 +12,20 @@ Una herramienta en Python para cortar archivos de audio .wav en segmentos más p
 ## Requisitos previos
 
 1. Python 3.6 o superior
-2. Biblioteca `pydub`:
+2. Bibliotecas necesarias:
    ```
-   pip install pydub
+   pip install librosa soundfile numpy
    ```
-3. FFmpeg instalado en tu sistema (necesario para que pydub funcione)
-
-   - **En macOS** (usando Homebrew):
-     ```
-     brew install ffmpeg
-     ```
-   - **En Ubuntu/Debian**:
-     ```
-     sudo apt-get install ffmpeg
-     ```
-   - **En Windows**: Descarga desde [ffmpeg.org](https://ffmpeg.org/download.html) y añade a PATH
+   
+   O si usas conda:
+   ```
+   conda install -c conda-forge librosa soundfile numpy
+   ```
+   
+   También puedes usar el script de instalación incluido:
+   ```
+   sh install_requirements.sh
+   ```
 
 ## Instalación
 
@@ -99,7 +98,8 @@ python audio_splitter.py --input podcast.wav --output-dir segmentos_podcast --se
 ### Error al cargar el archivo de audio
 - Asegúrate de que la ruta al archivo es correcta
 - Verifica que el archivo esté en formato .wav
-- Comprueba que FFmpeg esté instalado correctamente
+- Comprueba que las bibliotecas librosa y soundfile estén instaladas correctamente
+- Si usas conda, asegúrate de ejecutar el script desde tu entorno conda activado
 
 ### Error al procesar los segmentos
 - Verifica que los tiempos de inicio sean menores que los tiempos de fin
