@@ -1,115 +1,217 @@
-# Audio Splitter
+# 🎵 Audio Splitter Suite 2.0
 
-Una herramienta en Python para cortar archivos de audio .wav en segmentos más pequeños según tiempos específicos.
+Sistema completo de procesamiento de audio con arquitectura modular profesional. Divide, convierte y edita metadatos de archivos de audio con facilidad.
 
-## Características
+## ✨ Características
 
-- Corta archivos .wav en múltiples segmentos
-- Permite especificar tiempos de inicio y fin en varios formatos
-- Soporta modo interactivo y modo línea de comandos
-- Nombra los archivos de salida automáticamente o con nombres personalizados
+- **🔄 Audio Converter**: Conversión entre WAV, MP3 y FLAC con preservación de metadatos
+- **✂️ Audio Splitter**: División precisa de archivos de audio en segmentos
+- **🏷️ Metadata Editor**: Editor profesional de metadatos ID3v2.4, Vorbis y iTunes
+- **🖼️ Artwork Manager**: Gestión completa de carátulas de álbumes
+- **🎛️ Interfaz dual**: Línea de comandos y menús interactivos
+- **📦 Arquitectura modular**: Código organizado y mantenible
 
-## Requisitos previos
+## 🚀 Instalación
 
-1. Python 3.6 o superior
-2. Bibliotecas necesarias:
-   ```
-   pip install librosa soundfile numpy
-   ```
-   
-   O si usas conda:
-   ```
-   conda install -c conda-forge librosa soundfile numpy
-   ```
-   
-   También puedes usar el script de instalación incluido:
-   ```
-   sh install_requirements.sh
-   ```
-
-## Instalación
-
-1. Clona o descarga este repositorio
-2. Asegúrate de tener instaladas las dependencias mencionadas anteriormente
-
-## Uso
-
-### Modo interactivo
-
-Ejecuta el script sin argumentos para usar el modo interactivo, que te guiará paso a paso:
-
-```
-python audio_splitter.py
+### Instalación rápida
+```bash
+git clone https://github.com/yourusername/Audio-Splitter.git
+cd Audio-Splitter
+pip install -r requirements.txt
 ```
 
-El programa te pedirá:
-1. La ruta del archivo de audio .wav
-2. El directorio donde guardar los segmentos (opcional)
-3. Para cada segmento:
-   - Tiempo de inicio
-   - Tiempo de fin
-   - Nombre del archivo de salida (opcional)
-
-### Modo línea de comandos
-
-Para automatizar el proceso o usarlo en scripts:
-
-```
-python audio_splitter.py --input ARCHIVO.WAV --segments "INICIO-FIN:NOMBRE" "INICIO-FIN:NOMBRE" ...
+### Instalación como paquete
+```bash
+pip install -e .
 ```
 
-Parámetros:
-- `--input` o `-i`: Ruta al archivo de audio .wav
-- `--output-dir` o `-o`: Directorio donde guardar los segmentos (por defecto: "output")
-- `--segments` o `-s`: Lista de segmentos en formato "inicio-fin:nombre"
+### Scripts de instalación
+```bash
+# Instalación básica
+./scripts/install.sh
 
-## Formatos de tiempo aceptados
-
-El programa acepta varios formatos de tiempo:
-
-- `MM:SS` (minutos:segundos) - Ejemplo: "1:30" (1 minuto y 30 segundos)
-- `MM:SS.ms` (minutos:segundos.milisegundos) - Ejemplo: "1:30.500" (1 minuto, 30 segundos y 500 milisegundos)
-- `HH:MM:SS` (horas:minutos:segundos) - Ejemplo: "1:30:45" (1 hora, 30 minutos y 45 segundos)
-- Segundos - Ejemplo: "90.5" (90 segundos y medio)
-- Milisegundos - Ejemplo: "90500" (90.5 segundos en milisegundos)
-
-## Ejemplos
-
-### Ejemplo 1: Cortar una canción en partes
-
-```
-python audio_splitter.py --input cancion.wav --segments "0:00-0:30:intro" "0:30-2:15:estrofa1" "2:15-2:45:coro" "2:45-4:30:estrofa2" "4:30-5:00:outro"
+# Instalación avanzada con herramientas de desarrollo
+./scripts/install_advanced.sh
 ```
 
-### Ejemplo 2: Extraer segmentos de una entrevista
+## 📖 Uso
 
-```
-python audio_splitter.py --input entrevista.wav --segments "1:20-3:45:pregunta1" "5:30-8:15:pregunta2" "10:20-15:00:pregunta3"
-```
-
-### Ejemplo 3: Guardar en un directorio específico
-
-```
-python audio_splitter.py --input podcast.wav --output-dir segmentos_podcast --segments "0:00-5:00:introduccion" "5:00-25:00:tema_principal" "25:00-30:00:conclusion"
+### Modo Interactivo
+```bash
+python main.py
 ```
 
-## Solución de problemas
+### Línea de Comandos
 
-### Error al cargar el archivo de audio
-- Asegúrate de que la ruta al archivo es correcta
-- Verifica que el archivo esté en formato .wav
-- Comprueba que las bibliotecas librosa y soundfile estén instaladas correctamente
-- Si usas conda, asegúrate de ejecutar el script desde tu entorno conda activado
+#### División de audio
+```bash
+python -m audio_splitter.ui.cli split archivo.wav --segments "0:30-1:45:intro" "1:45-3:20:verso"
+```
 
-### Error al procesar los segmentos
-- Verifica que los tiempos de inicio sean menores que los tiempos de fin
-- Asegúrate de usar los formatos de tiempo correctos
-- Comprueba que tienes permisos de escritura en el directorio de salida
+#### Conversión de formatos
+```bash
+python -m audio_splitter.ui.cli convert archivo.wav -f mp3 -q high
+python -m audio_splitter.ui.cli convert directorio/ -f flac --batch --recursive
+```
 
-## Licencia
+#### Edición de metadatos
+```bash
+python -m audio_splitter.ui.cli metadata archivo.mp3 --title "Mi Canción" --artist "Mi Artista"
+```
 
-Este proyecto está disponible como código abierto bajo los términos de la licencia MIT.
+## 🏗️ Arquitectura
 
-## Contribuciones
+```
+Audio-Splitter/
+├── 📁 audio_splitter/              # Paquete principal
+│   ├── 📁 core/                    # Lógica de negocio
+│   │   ├── splitter.py             # División de audio
+│   │   ├── converter.py            # Conversión de formatos
+│   │   └── metadata_manager.py     # Gestión de metadatos
+│   ├── 📁 ui/                      # Interfaces de usuario
+│   │   ├── cli.py                  # Línea de comandos
+│   │   └── interactive.py          # Menús interactivos
+│   ├── 📁 utils/                   # Utilidades
+│   │   ├── file_utils.py           # Manejo de archivos
+│   │   └── audio_utils.py          # Procesamiento de audio
+│   └── 📁 config/                  # Configuraciones
+│       └── settings.py             # Configuraciones globales
+├── 📁 tests/                       # Tests unitarios
+├── 📁 docs/                        # Documentación
+├── 📁 scripts/                     # Scripts de utilidad
+├── 📁 data/                        # Datos del proyecto
+│   ├── 📁 templates/               # Plantillas de metadatos
+│   ├── 📁 output/                  # Archivos de salida
+│   └── 📁 sources/                 # Archivos fuente
+├── main.py                         # Punto de entrada
+├── setup.py                        # Configuración del paquete
+└── requirements.txt                # Dependencias
+```
 
-Las contribuciones son bienvenidas. Por favor, siente libre de mejorar este código o reportar problemas.
+## 🛠️ Desarrollo
+
+### Ejecutar tests
+```bash
+python -m pytest tests/
+```
+
+### Limpiar archivos temporales
+```bash
+python scripts/cleanup.py
+```
+
+### Estructura modular
+- **Separación de responsabilidades**: Core, UI, Utils, Config
+- **Importaciones limpias**: Cada módulo con responsabilidad específica
+- **Tests unitarios**: Cobertura de funcionalidades principales
+- **Configuración centralizada**: Settings globales en un solo lugar
+
+## 📋 Formatos Soportados
+
+### Entrada
+- WAV (sin compresión)
+- MP3 (MPEG Audio Layer III)
+- FLAC (Free Lossless Audio Codec)
+- M4A (MPEG-4 Audio)
+- OGG (Ogg Vorbis)
+
+### Salida
+- WAV (sin compresión, máxima calidad)
+- MP3 (128k, 192k, 320k, VBR)
+- FLAC (niveles de compresión 0-8)
+
+### Metadatos
+- **MP3**: ID3v2.4 (TIT2, TPE1, TALB, etc.)
+- **FLAC**: Vorbis Comments
+- **MP4/M4A**: iTunes tags
+- **WAV**: ID3 embebido (soporte limitado)
+
+## 🎯 Casos de Uso
+
+### Para Músicos
+- División de sesiones de grabación en pistas individuales
+- Conversión de masters a diferentes formatos para distribución
+- Organización de metadatos para bibliotecas musicales
+
+### Para Podcasters
+- División de episodios largos en segmentos
+- Conversión a MP3 optimizado para distribución
+- Adición de metadatos y artwork profesional
+
+### Para Archivistas
+- Conversión de formatos legacy a estándares modernos
+- Preservación con FLAC sin pérdida
+- Organización masiva de colecciones
+
+## 🔧 Configuración Avanzada
+
+### Calidades de conversión
+```python
+# MP3
+'low': 128k bitrate
+'medium': 192k bitrate  
+'high': 320k bitrate
+'vbr_medium': Variable Bitrate Q2
+'vbr_high': Variable Bitrate Q0
+
+# FLAC
+'low': Compresión nivel 0 (más rápido)
+'medium': Compresión nivel 5 (balanceado)
+'high': Compresión nivel 8 (menor tamaño)
+```
+
+### Directorios personalizables
+```python
+# En audio_splitter/config/settings.py
+OUTPUT_DIR = "mi_directorio_salida"
+TEMPLATES_DIR = "mis_plantillas"
+```
+
+## 🤝 Contribuir
+
+1. Fork el proyecto
+2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
+3. Commit tus cambios (`git commit -m 'Add AmazingFeature'`)
+4. Push a la rama (`git push origin feature/AmazingFeature`)
+5. Abre un Pull Request
+
+## 📝 Changelog
+
+### v2.0.0
+- ✨ **Nueva arquitectura modular**
+- ✨ **Interfaz CLI completa**
+- ✨ **Sistema de configuración centralizado**
+- ✨ **Tests unitarios**
+- ✨ **Mejor manejo de errores**
+- ✨ **Documentación mejorada**
+- 🔧 **Refactoring completo del código**
+- 🔧 **Separación de responsabilidades**
+
+### v1.0.0
+- 🎉 **Lanzamiento inicial**
+- ✨ **Audio Splitter básico**
+- ✨ **Audio Converter**
+- ✨ **Metadata Editor**
+
+## 📄 Licencia
+
+Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) para detalles.
+
+## 🙏 Reconocimientos
+
+- **librosa**: Procesamiento de audio
+- **mutagen**: Manejo de metadatos
+- **rich**: Interfaz de terminal mejorada
+- **pydub**: Manipulación de audio
+- **soundfile**: I/O de archivos de audio
+
+## 📞 Soporte
+
+- 📧 **Email**: contact@audiosplitter.dev
+- 🐛 **Issues**: [GitHub Issues](https://github.com/yourusername/Audio-Splitter/issues)
+- 📖 **Documentación**: [Docs](docs/)
+- 💬 **Discusiones**: [GitHub Discussions](https://github.com/yourusername/Audio-Splitter/discussions)
+
+---
+
+**🎵 Audio Splitter Suite 2.0** - *Procesamiento de audio profesional, simplificado.*

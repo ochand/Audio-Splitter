@@ -1,4 +1,63 @@
+# Node.js
 node_modules/
+
+# Sistema
 .DS_Store
-sources/
-output/
+
+# Directorios del proyecto
+data/sources/
+data/output/
+data/metadata/
+data/templates/
+
+# Entorno virtual Python
+venv/
+
+# Archivos compilados de Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+
+# Distribución / empaquetado
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Entornos virtuales
+.env
+.venv
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+
+# Archivos temporales
+*.tmp
+*.temp
+.cleanup_temp/
+
+# Archivos de respaldo
+*.bak
+*.backup
+
+# Tests
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# MyPy
+.mypy_cache/
+.dmypy.json
+dmypy.json
